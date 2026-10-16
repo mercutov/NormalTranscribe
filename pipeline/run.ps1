@@ -33,8 +33,9 @@ if (-not (Test-Path $Python) -or -not (Test-Path $Marker)) {
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 }
 
-if (-not $InputPath) { $InputPath = "D:\NormalTranscribe\Ролики" }
-if (-not $OutputPath) { $OutputPath = "D:\NormalTranscribe\Заметки" }
+$AppRoot = Split-Path -Parent $PSScriptRoot
+if (-not $InputPath) { $InputPath = Join-Path $AppRoot "Ролики" }
+if (-not $OutputPath) { $OutputPath = Join-Path $AppRoot "Заметки" }
 
 $argv = @("$PSScriptRoot\transcribe_batch.py")
 if ($Check) { $argv += "--check" }
