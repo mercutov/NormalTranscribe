@@ -1,29 +1,36 @@
 # Нормальный транскрайб — установка для тестера (Windows PowerShell)
 # Одна команда:
 #   irm https://raw.githubusercontent.com/mercutov/NormalTranscribe/master/install.ps1 | iex
-#
-# Куда ставить (по желанию до команды):
-#   $env:NT_HOME = "F:\NormalTranscribe"
 
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $Repo = "mercutov/NormalTranscribe"
-$Dest = $env:NT_HOME
-if (-not $Dest) {
-    if (Test-Path "F:\") { $Dest = "F:\NormalTranscribe" }
-    else { $Dest = "C:\NormalTranscribe" }
-}
-$Dest = $Dest.TrimEnd("\", "/")
 
 Write-Host ""
-Write-Host "=== Нормальный транскрайб ===" -ForegroundColor Yellow
-Write-Host "Установка в: $Dest"
+Write-Host "=== Нормальный транскрайб — установка ===" -ForegroundColor Yellow
+Write-Host "Нужна NVIDIA от 8 ГБ. Путь только латиницей (без кириллицы)."
 Write-Host ""
 
-if ($Dest -match "[^\x00-\x7F]") {
-    throw "Путь не должен содержать кириллицу (ломается GigaAM). Пример: F:\NormalTranscribe"
+$defaultDest = if (Test-Path "F:\") { "F:\NormalTranscribe" } else { "C:\NormalTranscribe" }
+if ($env:NT_HOME) { $defaultDest = $env:NT_HOME.TrimEnd("\", "/") }
+
+while ($true) {
+    $answer = Read-Host "Куда установить? [Enter = $defaultDest]"
+    $Dest = if ([string]::IsNullOrWhiteSpace($answer)) { $defaultDest } else { $answer.Trim().TrimEnd("\", "/") }
+    if ($Dest -match "[^\x00-\x7F]") {
+        Write-Host "Нельзя: в пути есть кириллица. Пример: F:\NormalTranscribe" -ForegroundColor Red
+        continue
+    }
+    if ($Dest -notmatch '^[A-Za-z]:\\') {
+        Write-Host "Укажи полный путь, например F:\NormalTranscribe" -ForegroundColor Red
+        continue
+    }
+    break
 }
+
+Write-Host "Установка в: $Dest" -ForegroundColor Green
+Write-Host ""
 
 New-Item -ItemType Directory -Force -Path $Dest | Out-Null
 $tmp = Join-Path $env:TEMP ("NT-install-" + [guid]::NewGuid().ToString("n"))

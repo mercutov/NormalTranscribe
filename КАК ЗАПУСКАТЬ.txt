@@ -10,8 +10,7 @@
 Как поставить с нуля (тестировщик)
   В PowerShell одна команда:
     irm https://raw.githubusercontent.com/mercutov/NormalTranscribe/master/install.ps1 | iex
-  По умолчанию: F:\NormalTranscribe (или C:\...).
-  Другой диск:  $env:NT_HOME="D:\NormalTranscribe"   затем та же команда.
+  Скрипт спросит путь (Enter — предложенный по умолчанию).
 
 Как отдать коллеге (альтернатива)
   1. Скопируй всю папку NormalTranscribe целиком (exe, bin, pipeline, runtime).

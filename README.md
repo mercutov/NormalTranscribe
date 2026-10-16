@@ -10,16 +10,9 @@
 irm https://raw.githubusercontent.com/mercutov/NormalTranscribe/master/install.ps1 | iex
 ```
 
-По умолчанию ставит в `F:\NormalTranscribe` (если есть диск F:), иначе в `C:\NormalTranscribe`.
+Скрипт **спросит путь** (Enter — вариант по умолчанию) и скачает приложение + модели из [Releases](https://github.com/mercutov/NormalTranscribe/releases).
 
-Другой путь:
-
-```powershell
-$env:NT_HOME = "D:\NormalTranscribe"
-irm https://raw.githubusercontent.com/mercutov/NormalTranscribe/master/install.ps1 | iex
-```
-
-Скрипт скачает приложение и runtime с моделями из [Releases](https://github.com/mercutov/NormalTranscribe/releases).
+Путь только латиницей, например `F:\NormalTranscribe`.
 
 ## Обновления
 
