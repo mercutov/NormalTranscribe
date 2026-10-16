@@ -67,6 +67,29 @@ try {
         }
     }
 
+    # Склейка файлов, разрезанных из‑за лимита GitHub (*.ntsplit.001 + .002 …)
+    Write-Host "Собираю крупные модели (ntsplit)..."
+    Get-ChildItem -Path $Dest -Recurse -Filter "*.ntsplit.001" -ErrorAction SilentlyContinue | ForEach-Object {
+        $first = $_.FullName
+        $target = $first -replace "\.ntsplit\.001$", ""
+        $dir = Split-Path $first -Parent
+        $baseName = [IO.Path]::GetFileName($target)
+        $parts = Get-ChildItem -Path $dir -Filter ($baseName + ".ntsplit.*") |
+            Sort-Object Name
+        Write-Host ("  {0} ← {1} кусков" -f $baseName, $parts.Count)
+        if (Test-Path $target) { Remove-Item -Force $target }
+        $out = [IO.File]::Create($target)
+        try {
+            foreach ($p in $parts) {
+                $bytes = [IO.File]::ReadAllBytes($p.FullName)
+                $out.Write($bytes, 0, $bytes.Length)
+                Remove-Item -Force $p.FullName
+            }
+        } finally {
+            $out.Close()
+        }
+    }
+
     New-Item -ItemType Directory -Force -Path (Join-Path $Dest "Заметки"), (Join-Path $Dest "Ролики") | Out-Null
     $obs = Join-Path $Dest "Заметки\.obsidian"
     if (-not (Test-Path $obs)) {
