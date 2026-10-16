@@ -1,0 +1,26 @@
+# Копия этого файла создаётся в D:\tools\transcribe-dual\config.yaml
+# Туда можно дописать свои значения. Токен в этот файл не класть.
+
+# Пусто: программа сама берёт ffmpeg из папки bin рядом с собой.
+ffmpeg:
+language: ru
+device: cuda
+gigaam_model: v3_e2e_rnnt
+whisper_model: large-v3
+whisper_beam: 5
+max_chunk_sec: 20
+merge_gap_sec: 0.45
+min_turn_sec: 0.3
+# Порог согласия SequenceMatcher (после нормализации). Ниже — conflict.
+# 0.50 = только сильные расхождения; выше (0.72) — больше пунктов «к сверке».
+inline_at: 0.50
+
+# Локальная Ollama для сильных расхождений (после ASR). Без Ollama — просто пропуск.
+ollama: true
+ollama_host: http://127.0.0.1:11434
+ollama_model: qwen2.5:7b-instruct
+
+# Если число говорящих известно, раскомментируй. Так разметка спикеров точнее.
+# num_speakers: 2
+# min_speakers: 2
+# max_speakers: 4

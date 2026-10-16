@@ -1,0 +1,7 @@
+# torch/torchaudio and gigaam are installed by setup.ps1.
+# pyannote 3.3 needs torch 2.5. A newer torch removes torchaudio.AudioMetaData.
+faster-whisper
+pyannote.audio==3.3.2
+soundfile
+matplotlib
+onnxruntime>=1.20
