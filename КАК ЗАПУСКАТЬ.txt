@@ -4,11 +4,17 @@
 
 Важно
   Папка должна лежать по пути без кириллицы.
-  Правильно: D:\NormalTranscribe
+  Правильно: D:\NormalTranscribe или F:\NormalTranscribe
   Нельзя: путь с кириллицей (ломается GigaAM)
 
-Как отдать коллеге
-  1. Скопируй всю папку D:\NormalTranscribe целиком (exe, bin, pipeline, runtime).
+Как поставить с нуля (тестировщик)
+  В PowerShell одна команда:
+    irm https://raw.githubusercontent.com/mercutov/NormalTranscribe/master/install.ps1 | iex
+  По умолчанию: F:\NormalTranscribe (или C:\...).
+  Другой диск:  $env:NT_HOME="D:\NormalTranscribe"   затем та же команда.
+
+Как отдать коллеге (альтернатива)
+  1. Скопируй всю папку NormalTranscribe целиком (exe, bin, pipeline, runtime).
   2. Отдельно: установи Ollama (https://ollama.com) и скачай модель.
      В окне приложения — выпадающий список моделей Ollama (кнопка «Обновить»).
      Рекомендации:

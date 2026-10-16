@@ -489,9 +489,11 @@ class App(tk.Tk):
 
                 def ask() -> None:
                     ok = messagebox.askyesno(
-                        "Обновление",
-                        f"Доступна версия {info.remote} (сейчас {_read_local_version()}).\n"
-                        f"Обновить приложение?\n\nRuntime и папка Заметок не трогаются.",
+                        "Доступна новая версия",
+                        f"Вышла версия {info.remote}\n"
+                        f"(у тебя сейчас {_read_local_version()}).\n\n"
+                        f"Скачать и установить обновление?\n\n"
+                        f"Модели и папка «Заметки» не удаляются.",
                     )
                     if not ok:
                         return
